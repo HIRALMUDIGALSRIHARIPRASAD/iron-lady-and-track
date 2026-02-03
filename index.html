@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Iron-Track | Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 p-10">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-red-800 mb-6">Iron-Track Buddy Management</h1>
+        
+        <form action="/add" method="POST" class="bg-white p-6 rounded shadow-sm mb-8 flex gap-4">
+            <input name="group_name" placeholder="Group Name" class="border p-2 flex-1 rounded" required>
+            <input name="mentor_name" placeholder="Mentor Name" class="border p-2 flex-1 rounded" required>
+            <input name="member_count" type="number" placeholder="Size" class="border p-2 w-20 rounded" required>
+            <button class="bg-red-700 text-white px-6 py-2 rounded hover:bg-red-800">Add Group</button>
+        </form>
+
+        <div class="bg-white shadow-md rounded my-6">
+            <table class="text-left w-full border-collapse">
+                <thead>
+                    <tr>
+                        <th class="py-4 px-6 bg-gray-100 font-bold uppercase text-sm text-gray-600">Group Name</th>
+                        <th class="py-4 px-6 bg-gray-100 font-bold uppercase text-sm text-gray-600">Mentor</th>
+                        <th class="py-4 px-6 bg-gray-100 font-bold uppercase text-sm text-gray-600">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for group in groups %}
+                    <tr class="hover:bg-gray-50 border-b">
+                        <td class="py-4 px-6">{{ group.group_name }} ({{ group.member_count }})</td>
+                        <td class="py-4 px-6">
+                            <form action="/update/{{ group.id }}" method="POST" class="flex gap-2">
+                                <input name="new_mentor" value="{{ group.mentor_name }}" class="border px-2 py-1 text-sm rounded">
+                                <button class="text-blue-600 text-xs">Update</button>
+                            </form>
+                        </td>
+                        <td class="py-4 px-6">
+                            <a href="/delete/{{ group.id }}" class="text-red-500 font-bold">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
